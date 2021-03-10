@@ -1,0 +1,117 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+	html,
+	body {
+		height: 100%;
+		margin: 0 auto;
+	}
+	canvas {
+		/*height: 270px;*/
+		/*width: 480px;*/
+		
+		width: 100%;
+		display: block;
+		margin-left: auto;
+		margin-right: auto;
+		border: 2px solid grey;
+
+	}
+
+
+	.slidecontainer {
+		/*width: 480px;*/
+		width: 80%;
+		margin-left: auto;
+		margin-right: auto;
+	}
+
+	/* The slider itself */
+	.slider {
+		-webkit-appearance: none;
+		appearance: none;
+		/*width: 480px;*/
+		width: 100%;
+		height: 12px; /* Specified height */
+		border-radius:7px;
+		background: #d3d3d3; /* Grey background */
+		outline: none; /* Remove outline */
+		opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
+		-webkit-transition: .2s; /* 0.2 seconds transition on hover */
+		transition: opacity .2s;
+	}
+
+	/* Mouse-over effects */
+	.slider:hover {
+		opacity: 1; /* Fully shown on mouse-over */
+	}
+
+	/* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
+	.slider::-webkit-slider-thumb {
+		-webkit-appearance: none; /* Override default look */
+		appearance: none;
+		width: 25px; /* Set a specific slider handle width */
+		height: 25px; /* Slider handle height */
+		border-radius:50%;
+		background: #4CAF50; /* Green background */
+		cursor: pointer; /* Cursor on hover */
+	}
+
+	.slider::-moz-range-thumb {
+		width: 25px; /* Set a specific slider handle width */
+		height: 25px; /* Slider handle height */
+		border-radius:50%;
+		background: #4CAF50; /* Green background */
+		cursor: pointer; /* Cursor on hover */
+	}
+</style>
+</head>
+
+
+<body>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"> </script>
+	<canvas id="canvas" width="100%" height="100%"></canvas>
+	<br>
+<!!! <input id="my-input" type="range" min="1" max="44" value="1" />
+<div class="slidecontainer">
+<input type="range" min="1" max="100" value="1" class="slider" id="myRange">
+<p style="text-align:center;">Geser slider untuk membuka dan melihat jaring-jaring kubus.</p>
+</div>
+
+
+
+<script type="text/javascript">
+var canvas = document.getElementById("canvas");
+
+var img = new Image();
+var context = canvas.getContext("2d");
+img.src = "cube/kubus1.gif"
+img.onload = () => {
+  context.drawImage(img, 0, 0)
+}
+
+canvas.height = 270;
+canvas.width = 480;
+//canvas.width = window.innerWidth;
+//canvas.height = window.innerHeight;
+
+var totalImages = 44;
+var videoFrames = [];
+for (var i = 1; i <= totalImages; i++) {
+	var videoFrame = new Image;
+	var videoFrameUrl = 'cube/kubus' + i + '.gif';
+	
+  videoFrame.src = videoFrameUrl;
+  videoFrames.push(videoFrame);
+}
+
+$("#myRange").on("input", function(event) {
+  var currentImage = videoFrames[event.target.value - 1];
+  var context = canvas.getContext("2d");
+  context.drawImage(currentImage, 0, 0);
+});
+    </script>
+</body>
+</html>
