@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+	html,
+	body {
+		height: 100%;
+		margin: 0 auto;
+	}
+	canvas {
+		/*height: 270px;*/
+		/*width: 480px;*/
+		
+		width: 100%;
+		display: block;
+		margin-left: auto;
+		margin-right: auto;
+		border: 0px solid grey;
+
+	}
+
+
+	.slidecontainer {
+		/*width: 480px;*/
+		width: 80%;
+		margin-left: auto;
+		margin-right: auto;
+	}
+
+	/* The slider itself */
+	.slider {
+		-webkit-appearance: none;
+		appearance: none;
+		/*width: 480px;*/
+		width: 100%;
+		height: 30px; /* Specified height */
+		border-radius:15px;
+		background: #d3d3d3; /* Grey background */
+		outline: none; /* Remove outline */
+		opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
+		-webkit-transition: .2s; /* 0.2 seconds transition on hover */
+		transition: opacity .2s;
+	}
+
+	/* Mouse-over effects */
+	.slider:hover {
+		opacity: 1; /* Fully shown on mouse-over */
+	}
+
+	/* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
+	.slider::-webkit-slider-thumb {
+		-webkit-appearance: none; /* Override default look */
+		appearance: none;
+		width: 50px; /* Set a specific slider handle width */
+		height: 50px; /* Slider handle height */
+		border-radius:50%;
+		background: #4CAF50; /* Green background */
+		cursor: pointer; /* Cursor on hover */
+	}
+
+	.slider::-moz-range-thumb {
+		width: 50px; /* Set a specific slider handle width */
+		height: 50px; /* Slider handle height */
+		border-radius:50%;
+		background: #4CAF50; /* Green background */
+		cursor: pointer; /* Cursor on hover */
+	}
+	.div-clue{
+	background-color:#d3d3d3;
+	}
+</style>
+</head>
+
+
+<body>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"> </script>
+	<canvas id="canvas" width="100%" height="100%"></canvas>
+	<br>
+<!!! <input id="my-input" type="range" min="1" max="20" value="1" />
+<div class="slidecontainer">
+<input type="range" min="1" max="21" value="1" class="slider" id="myRange">
+</div>
+<br>
+
+<div class="div-clue" style="text-align:left; font-size:100%; font-family:arial; padding-top: 20px; padding-left:25px;padding-bottom:20px;">
+<p>Geser tombol slider(warna hijau) ke kanan untuk melihat sekuen pergerakan pada karakter animasi dari posisi awal ke posisi akhir.
+</p>
+<br>
+<p>Perhatikan urutan angka yang tampak saat slider digeser, tahukah kenapa urutannya seperti itu?
+</p>
+<br>
+<p>Perhatikan satu persatu pose secara visual, apakah ada aspek-aspek dari 12 prinsip animasi yang diterapkan di sana?
+</p>
+<br>
+<p>
+Perhatikan pergerakan karakter secara utuh, aspek-aspek apa saja yang berkaitan dengan prinsip animasi yang dapat kalian temukan?
+</p>
+</div>
+
+<script type="text/javascript">
+var canvas = document.getElementById("canvas");
+
+var img = new Image();
+var context = canvas.getContext("2d");
+img.src = "sekuen_01/lompat_1.gif"
+img.onload = () => {
+  context.drawImage(img, 0, 0)
+}
+
+canvas.height = 650;
+canvas.width = 550;
+//canvas.width = window.innerWidth;
+//canvas.height = window.innerHeight;
+
+var totalImages = 21;
+var videoFrames = [];
+for (var i = 1; i <= totalImages; i++) {
+	var videoFrame = new Image;
+	var videoFrameUrl = 'sekuen_01/lompat_' + i + '.gif';
+	
+  videoFrame.src = videoFrameUrl;
+  videoFrames.push(videoFrame);
+}
+
+$("#myRange").on("input", function(event) {
+  var currentImage = videoFrames[event.target.value - 1];
+  var context = canvas.getContext("2d");
+  context.drawImage(currentImage, 0, 0);
+});
+    </script>
+</body>
+</html>
