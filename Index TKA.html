@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Launcher Premium - Simulasi TKA</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://tailwindcss.com"></script>
+    <!-- Font Awesome CDN untuk Ikon Modern -->
+    <link rel="stylesheet" href="https://cloudflare.com"> 
+    <!-- Custom CSS untuk Animasi Latar Belakang & Efek Tambahan -->
+    <style>
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .animated-bg {
+            background: linear-gradient(-45deg, #1e3a8a, #3b82f6, #0d9488, #7c3aed);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+        }
+    </style>
+</head>
+<body class="animated-bg min-h-screen flex items-center justify-center font-sans antialiased p-4">
+
+    <!-- Kartu Utama dengan Efek Kaca (Glassmorphism) -->
+    <div class="glass-card p-8 rounded-3xl shadow-2xl w-full max-w-md transform transition-all duration-300 hover:scale-[1.01]">
+        
+        <!-- Header dengan Logo Lingkaran -->
+        <div class="text-center mb-8">
+            <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-blue-600 text-white shadow-lg shadow-blue-500/30 mb-4 transform -rotate-6 hover:rotate-0 transition-transform duration-300">
+                <i class="fa-solid fa-rocket text-2xl"></i>
+            </div>
+            <h1 class="text-3xl font-extrabold text-gray-800 tracking-tight bg-gradient-to-r from-blue-700 to-purple-700 bg-clip-text text-transparent">
+                Portal Ujian TKA
+            </h1>
+            <p class="text-gray-500 text-sm mt-2 font-medium">Pilih paket simulasi Anda dan mulai ujian sekarang</p>
+        </div>
+
+        <!-- Area Menu / Daftar Tombol Interaktif -->
+        <div class="space-y-4">
+            
+            <!-- Tombol Paket 01 -->
+            <a href="simulasi-tka-01.html" class="group flex items-center justify-between bg-white hover:bg-gradient-to-r hover:from-blue-600 hover:to-blue-500 text-gray-700 hover:text-white border border-gray-100 font-semibold py-4 px-6 rounded-2xl shadow-sm hover:shadow-xl hover:shadow-blue-500/20 transition-all duration-300 transform hover:-translate-y-0.5">
+                <div class="flex items-center gap-4">
+                    <div class="w-10 h-10 rounded-xl bg-blue-50 group-hover:bg-white/20 flex items-center justify-center text-blue-600 group-hover:text-white transition-colors">
+                        <i class="fa-solid fa-file-signature text-lg"></i>
+                    </div>
+                    <div>
+                        <span class="block text-base">Simulasi TKA 01</span>
+                        <span class="block text-xs text-gray-400 group-hover:text-blue-100 font-normal">Paket Dasar</span>
+                    </div>
+                </div>
+                <i class="fa-solid fa-chevron-right text-gray-400 group-hover:text-white transform group-hover:translate-x-1 transition-all"></i>
+            </a>
+
+            <!-- Tombol Paket 02 -->
+            <a href="simulasi-tka-02.html" class="group flex items-center justify-between bg-white hover:bg-gradient-to-r hover:from-emerald-600 hover:to-emerald-500 text-gray-700 hover:text-white border border-gray-100 font-semibold py-4 px-6 rounded-2xl shadow-sm hover:shadow-xl hover:shadow-emerald-500/20 transition-all duration-300 transform hover:-translate-y-0.5">
+                <div class="flex items-center gap-4">
+                    <div class="w-10 h-10 rounded-xl bg-emerald-50 group-hover:bg-white/20 flex items-center justify-center text-emerald-600 group-hover:text-white transition-colors">
+                        <i class="fa-solid fa-brain text-lg"></i>
+                    </div>
+                    <div>
+                        <span class="block text-base">Simulasi TKA 02</span>
+                        <span class="block text-xs text-gray-400 group-hover:text-emerald-100 font-normal">Paket Menengah</span>
+                    </div>
+                </div>
+                <i class="fa-solid fa-chevron-right text-gray-400 group-hover:text-white transform group-hover:translate-x-1 transition-all"></i>
+            </a>
+
+            <!-- Tombol Paket 03 -->
+            <a href="simulasi-tka-03.html" class="group flex items-center justify-between bg-white hover:bg-gradient-to-r hover:from-purple-600 hover:to-purple-500 text-gray-700 hover:text-white border border-gray-100 font-semibold py-4 px-6 rounded-2xl shadow-sm hover:shadow-xl hover:shadow-purple-500/20 transition-all duration-300 transform hover:-translate-y-0.5">
+                <div class="flex items-center gap-4">
+                    <div class="w-10 h-10 rounded-xl bg-purple-50 group-hover:bg-white/20 flex items-center justify-center text-purple-600 group-hover:text-white transition-colors">
+                        <i class="fa-solid fa-trophy text-lg"></i>
+                    </div>
+                    <div>
+                        <span class="block text-base">Simulasi TKA 03</span>
+                        <span class="block text-xs text-gray-400 group-hover:text-purple-100 font-normal">Paket Mahir</span>
+                    </div>
+                </div>
+                <i class="fa-solid fa-chevron-right text-gray-400 group-hover:text-white transform group-hover:translate-x-1 transition-all"></i>
+            </a>
+
+        </div>
+
+        <!-- Catatan Kaki / Status Informasi -->
+        <div class="mt-8 pt-4 border-t border-gray-200/50 flex items-center justify-center gap-2 text-xs text-gray-500 font-medium">
+            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+            Sistem Siap. Selamat Berjuang!
+        </div>
+    </div>
+
+</body>
+</html>
