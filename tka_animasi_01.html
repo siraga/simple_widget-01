@@ -1,0 +1,1292 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kuis Interaktif TKA SMK Animasi</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      border-radius: 4px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 4px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+  </style>
+</head>
+<body class="bg-slate-100 text-slate-800 min-h-screen flex flex-col">
+
+  <!-- HEADER / NAVBAR -->
+  <header class="bg-indigo-900 text-white sticky top-0 z-30 shadow-md">
+    <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
+      <div class="flex items-center space-x-3">
+        <div class="bg-indigo-600 p-2 rounded-lg text-amber-400">
+		
+          <!--i class="fa-solid fa-film text-xl"></i--!>
+		  
+		  <a href="https://siraga.github.io/simple_widget-01/index.html">
+		  <i class="fa-solid fa-arrow-left text-xl"></i>
+		  </a>
+		  
+        </div>
+        <div>
+          <h1 class="font-bold text-base md:text-lg leading-tight"> SIMULASI TKA </h1>
+          <p class="text-xs text-indigo-200"> Pelajaran Pilihan Animasi </p>
+        </div>
+      </div>
+
+      <!-- Timer & Progress -->
+      <div id="quiz-header-info" class="hidden flex items-center space-x-4">
+        <div class="flex items-center bg-indigo-950/80 px-3 py-1.5 rounded-lg border border-indigo-700">
+          <i class="fa-regular fa-clock text-amber-400 mr-2"></i>
+          <span id="timer-display" class="font-mono font-bold text-lg text-amber-300">60:00</span>
+        </div>
+        <button id="btn-finish-top" onclick="showSubmitModal()" class="hidden sm:inline-flex bg-emerald-600 hover:bg-emerald-500 text-white font-medium px-4 py-1.5 rounded-lg text-sm transition">
+          Selesai Ujian
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- START SCREEN -->
+  <main id="start-screen" class="flex-1 flex items-center justify-center p-4">
+    <div class="bg-white max-w-2xl w-full rounded-2xl shadow-xl p-6 md:p-8 text-center border border-slate-200">
+      <div class="w-16 h-16 bg-indigo-100 text-indigo-600 rounded-2xl flex items-center justify-center mx-auto mb-4 text-2xl">
+        <i class="fa-solid fa-laptop-code"></i>
+      </div>
+      <h2 class="text-2xl font-bold text-slate-800 mb-2">Simulasi Kuis Interaktif TKA SMK Animasi</h2>
+      <p class="text-slate-600 mb-6 text-sm md:text-base">
+        Kuis ini terdiri atas 25 soal literasi berbasis stimulus aplikasi industri dan penalaran animasi.
+      </p>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-left mb-8">
+        <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 flex items-start space-x-3">
+          <i class="fa-solid fa-list-check text-indigo-600 text-lg mt-0.5"></i>
+          <div>
+            <span class="block font-semibold text-xs text-slate-500 uppercase">Jumlah Soal</span>
+            <span class="text-sm font-bold text-slate-800">25 Nomor</span>
+            <span class="block text-xs text-slate-500">(10 PG, 10 MCMA, 5 Kategori)</span>
+          </div>
+        </div>
+        <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 flex items-start space-x-3">
+          <i class="fa-regular fa-clock text-indigo-600 text-lg mt-0.5"></i>
+          <div>
+            <span class="block font-semibold text-xs text-slate-500 uppercase">Waktu Ujian</span>
+            <span class="text-sm font-bold text-slate-800">60 Menit</span>
+            <span class="block text-xs text-slate-500">(Hitung Mundur Otomatis)</span>
+          </div>
+        </div>
+        <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 flex items-start space-x-3">
+          <i class="fa-solid fa-bullseye text-indigo-600 text-lg mt-0.5"></i>
+          <div>
+            <span class="block font-semibold text-xs text-slate-500 uppercase">Tingkat Kesulitan</span>
+            <span class="text-sm font-bold text-slate-800">Level Menengah</span>
+            <span class="block text-xs text-slate-500">(HOTS & Aplikasi Industri)</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-amber-50 border border-amber-200 rounded-xl p-4 text-left mb-8 text-amber-800 text-xs md:text-sm space-y-1">
+        <p class="font-semibold mb-1"><i class="fa-solid fa-triangle-exclamation mr-1"></i> Petunjuk Pengerjaan:</p>
+        <p>• <b>Pilihan Ganda:</b> Pilih 1 jawaban yang paling benar.</p>
+        <p>• <b>Pilihan Ganda Kompleks (MCMA):</b> Pilih lebih dari satu jawaban yang benar.</p>
+        <p>• <b>Kategori:</b> Tentukan status pada tiap sub-pernyataan (Benar/Salah, Sesuai/Tidak Sesuai, Fakta/Opini).</p>
+      </div>
+
+      <button onclick="startQuiz()" class="w-full sm:w-auto bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-8 py-3.5 rounded-xl shadow-lg transition transform active:scale-95 text-base">
+        Mulai Kerjakan Sekarang <i class="fa-solid fa-arrow-right ml-2"></i>
+      </button>
+    </div>
+  </main>
+
+  <!-- QUIZ INTERACTIVE SCREEN -->
+  <main id="quiz-screen" class="hidden flex-1 max-w-7xl w-full mx-auto p-4 grid grid-cols-1 lg:grid-cols-4 gap-6">
+    
+    <!-- LEFT / MAIN: STIMULUS & QUESTION -->
+    <div class="lg:col-span-3 space-y-4 flex flex-col">
+      
+      <!-- STIMULUS CARD -->
+      <div class="bg-white rounded-2xl p-5 md:p-6 shadow-sm border border-slate-200">
+        <div class="flex items-center space-x-2 text-indigo-600 font-semibold text-xs uppercase tracking-wider mb-2">
+          <i class="fa-solid fa-file-lines"></i>
+          <span>Stimulus / Teks Bacaan</span>
+        </div>
+        <h3 id="stimulus-title" class="font-bold text-slate-800 text-base md:text-lg mb-2"></h3>
+        <div id="stimulus-body" class="text-slate-600 text-sm leading-relaxed max-h-60 overflow-y-auto custom-scrollbar bg-slate-50 p-4 rounded-xl border border-slate-200 whitespace-pre-line"></div>
+      </div>
+
+      <!-- QUESTION CARD -->
+      <div class="bg-white rounded-2xl p-5 md:p-6 shadow-sm border border-slate-200 flex-1 flex flex-col justify-between">
+        <div>
+          <!-- Question Header Meta -->
+          <div class="flex flex-wrap items-center justify-between gap-2 mb-4 pb-3 border-b border-slate-100">
+            <div class="flex items-center space-x-2">
+              <span id="question-number-badge" class="bg-indigo-600 text-white font-bold text-xs px-3 py-1 rounded-full">Soal 1 dari 25</span>
+              <span id="question-type-badge" class="bg-slate-100 text-slate-700 font-medium text-xs px-2.5 py-1 rounded-lg">Pilihan Ganda</span>
+            </div>
+            <button id="flag-btn" onclick="toggleFlag()" class="text-xs font-medium px-3 py-1 rounded-lg border transition flex items-center space-x-1 text-slate-500 border-slate-300 hover:bg-slate-50">
+              <i class="fa-regular fa-bookmark"></i>
+              <span>Ragu-ragu</span>
+            </button>
+          </div>
+
+          <!-- Question Text -->
+          <h4 id="question-text" class="text-slate-800 font-semibold text-base md:text-lg mb-5 leading-snug"></h4>
+
+          <!-- Answers Options Container -->
+          <div id="answers-container" class="space-y-3 mb-6"></div>
+        </div>
+
+        <!-- Navigation Buttons Footer -->
+        <div class="flex items-center justify-between pt-4 border-t border-slate-100 mt-6">
+          <button id="btn-prev" onclick="navigateQuestion(-1)" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium px-5 py-2.5 rounded-xl text-sm transition flex items-center space-x-2 disabled:opacity-40 disabled:cursor-not-allowed">
+            <i class="fa-solid fa-chevron-left"></i>
+            <span>Sebelumnya</span>
+          </button>
+
+          <span class="text-xs text-slate-400 hidden sm:inline">Pilihan jawaban tersimpan otomatis</span>
+
+          <button id="btn-next" onclick="navigateQuestion(1)" class="bg-indigo-600 hover:bg-indigo-700 text-white font-medium px-6 py-2.5 rounded-xl text-sm transition flex items-center space-x-2 shadow-sm">
+            <span>Selanjutnya</span>
+            <i class="fa-solid fa-chevron-right"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: NAVIGATION SIDEBAR -->
+    <div class="lg:col-span-1 space-y-4">
+      <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200 sticky top-20">
+        <h3 class="font-bold text-slate-800 text-sm mb-3 flex items-center justify-between">
+          <span>Navigasi Soal</span>
+          <span id="answered-counter" class="text-xs font-normal bg-indigo-50 text-indigo-600 px-2.5 py-1 rounded-md">0 / 25 Dijawab</span>
+        </h3>
+
+        <!-- Grid Buttons -->
+        <div id="nav-grid" class="grid grid-cols-5 gap-2 mb-5"></div>
+
+        <!-- Legend -->
+        <div class="text-xs space-y-1.5 pt-3 border-t border-slate-100 text-slate-500">
+          <div class="flex items-center space-x-2">
+            <span class="w-3 h-3 rounded bg-indigo-600 inline-block"></span>
+            <span>Sudah Dijawab</span>
+          </div>
+          <div class="flex items-center space-x-2">
+            <span class="w-3 h-3 rounded bg-amber-400 inline-block"></span>
+            <span>Ragu-ragu</span>
+          </div>
+          <div class="flex items-center space-x-2">
+            <span class="w-3 h-3 rounded bg-slate-100 border border-slate-300 inline-block"></span>
+            <span>Belum Dijawab</span>
+          </div>
+        </div>
+
+        <button onclick="showSubmitModal()" class="w-full mt-5 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold py-2.5 rounded-xl text-sm shadow transition">
+          Akhiri Ujian
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <!-- RESULT & REVIEW SCREEN -->
+  <main id="result-screen" class="hidden flex-1 max-w-5xl w-full mx-auto p-4 md:p-6 space-y-6">
+    <!-- Score Summary Card -->
+    <div class="bg-white rounded-2xl p-6 md:p-8 shadow-md border border-slate-200 text-center relative overflow-hidden">
+      <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500"></div>
+      
+      <h2 class="text-2xl font-bold text-slate-800 mb-1">Hasil Ujian TKA SMK Animasi</h2>
+      <p class="text-xs md:text-sm text-slate-500 mb-6">Ringkasan Nilai dan Evaluasi Hasil Pekerjaan Anda</p>
+
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+        <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+          <span class="block text-xs font-semibold text-slate-400 uppercase">Skor Total</span>
+          <span id="final-score" class="text-3xl font-extrabold text-indigo-600">0</span>
+          <span class="text-xs text-slate-400">/ 100</span>
+        </div>
+        <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+          <span class="block text-xs font-semibold text-slate-400 uppercase">Jawaban Benar</span>
+          <span id="correct-count" class="text-3xl font-extrabold text-emerald-600">0</span>
+          <span class="text-xs text-slate-400">/ 25 Soal</span>
+        </div>
+        <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+          <span class="block text-xs font-semibold text-slate-400 uppercase">Waktu Pengerjaan</span>
+          <span id="time-spent" class="text-xl font-bold text-slate-700">00:00</span>
+          <span class="block text-xs text-slate-400">Menit</span>
+        </div>
+        <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+          <span class="block text-xs font-semibold text-slate-400 uppercase">Kategori Kinerja</span>
+          <span id="grade-label" class="text-sm font-bold text-slate-800 mt-2 block">Memuaskan</span>
+        </div>
+      </div>
+
+      <div class="flex flex-wrap justify-center gap-3">
+        <button onclick="toggleReviewMode()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-medium px-6 py-2.5 rounded-xl text-sm transition">
+          <i class="fa-solid fa-magnifying-glass mr-2"></i> Lihat Pembahasan Lengkap
+        </button>
+        <button onclick="resetQuiz()" class="bg-slate-200 hover:bg-slate-300 text-slate-700 font-medium px-6 py-2.5 rounded-xl text-sm transition">
+          <i class="fa-solid fa-rotate-right mr-2"></i> Ulangi Kuis
+        </button>
+      </div>
+    </div>
+
+    <!-- Review Section Container -->
+    <div id="review-container" class="space-y-6 hidden">
+      <div class="flex items-center justify-between">
+        <h3 class="font-bold text-lg text-slate-800 flex items-center space-x-2">
+          <i class="fa-solid fa-book-open text-indigo-600"></i>
+          <span>Pembahasan Kunci Jawaban</span>
+        </h3>
+        <span class="text-xs text-slate-500">25 Nomor Soal</span>
+      </div>
+
+      <div id="review-list" class="space-y-6"></div>
+    </div>
+  </main>
+
+  <!-- SUBMIT CONFIRMATION MODAL -->
+  <div id="submit-modal" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+    <div class="bg-white max-w-md w-full rounded-2xl p-6 shadow-2xl text-center space-y-4">
+      <div class="w-12 h-12 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center mx-auto text-xl">
+        <i class="fa-solid fa-circle-question"></i>
+      </div>
+      <h3 class="font-bold text-slate-800 text-lg">Selesaikan Ujian Sekarang?</h3>
+      <p id="modal-answered-status" class="text-sm text-slate-600">
+        Anda telah menjawab 0 dari 25 soal. Pastikan semua soal telah terisi.
+      </p>
+
+      <div class="flex space-x-3 pt-2">
+        <button onclick="hideSubmitModal()" class="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium py-2.5 rounded-xl text-sm transition">
+          Batal / Kembali
+        </button>
+        <button onclick="submitQuiz()" class="flex-1 bg-emerald-600 hover:bg-emerald-500 text-white font-medium py-2.5 rounded-xl text-sm transition shadow">
+          Ya, Selesaikan
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- JAVASCRIPT LOGIC & DATA -->
+  <script>
+    // 25 QUESTIONS DATASET FOR SMK ANIMASI
+    const questions = [
+      {
+        id: 1,
+        type: 'single',
+        categoryName: 'Pilihan Ganda Sederhana',
+        stimulusTitle: 'Dilema Alur Kerja Studio "Nusantara Toon"',
+        stimulus: `Studio "Nusantara Toon" sedang memproduksi serial animasi 3D berdurasi 12 episode. Pada pertengahan tahap produksi, tim animator mengeluh karena model karakter 3D yang dikirim oleh tim modeling sering kali tidak bisa digerakkan secara fleksibel, ekspresi wajah kaku, dan terjadi stretching yang aneh pada bagian persendian siku dan lutut. Setelah ditelusuri, ternyata ada tahapan penting yang terlewati sebelum model 3D diserahkan kepada tim animator. Akibat kejadian ini, jadwal rilis produksi terancam mundur dua minggu.`,
+        question: 'Berdasarkan permasalahan pada Studio "Nusantara Toon", tahapan pipeline animasi 3D yang terlewati beserta profesi yang bertanggung jawab atas tahapan tersebut adalah ...',
+        options: [
+          { id: 'A', text: 'Texturing oleh 3D Texture Artist' },
+          { id: 'B', text: 'Rigging oleh Rigging Artist / Technical Director' },
+          { id: 'C', text: 'Compositing oleh Compositor' },
+          { id: 'D', text: 'Layout oleh Layout Artist' },
+          { id: 'E', text: '3D Sculpting oleh 3D Modeler' }
+        ],
+        correctAnswer: 'B',
+        explanation: 'Rigging adalah proses memasang kerangka (bone/skeleton) dan kontrol pergerakan (controllers) pada model 3D agar dapat digerakkan oleh animator. Jika model 3D langsung diserahkan tanpa rigging yang benar, animator tidak dapat menggerakkan karakter dan akan terjadi penyimpangan mesh/skinning.'
+      },
+      {
+        id: 2,
+        type: 'single',
+        categoryName: 'Pilihan Ganda Sederhana',
+        stimulusTitle: 'Integrasi Generative AI dalam Pra-Produksi Animasi',
+        stimulus: `Sebuah studio animasi independen memakai alat Generative AI berbasis teks-ke-gambar (text-to-image) pada tahap pra-produksi. Sutradara memanfaatkan AI untuk menghasilkan ratusan variasi ide visual latar belakang (concept art) dan eksplorasi bentuk karakter dalam waktu hitungan jam. Hal ini menghemat waktu riset hingga 60%. Namun, ketika masuk ke tahap produksi 3D, tim seniman visual menemukan bahwa konsep buatan AI tersebut sering kali tidak konsisten secara perspektif visual, memiliki proporsi anatomi yang berubah-ubah di tiap sudut, serta sulit diterjemahkan secara presisi ke dalam model sheet 3D.`,
+        question: 'Berdasarkan kasus di atas, bagaimana peran ideal pemanfaatan Generative AI yang paling tepat dalam pipeline produksi animasi modern tanpa merusak kualitas produk akhir?',
+        options: [
+          { id: 'A', text: 'Menggantikan seluruh peran Concept Artist dan 3D Modeler secara total dari pra-produksi hingga rendering.' },
+          { id: 'B', text: 'Menggunakan AI sebagai alat bantu pemantik ide (brainstorming) di awal pra-produksi, lalu dihaluskan dan disempurnakan secara manual oleh Concept Artist menjadi model sheet teknis yang konsisten.' },
+          { id: 'C', text: 'Menolak sama sekali penggunaan AI karena hasil gambar buatan AI selalu memiliki kualitas rendah di semua tahapan.' },
+          { id: 'D', text: 'Memasukkan gambar buatan AI secara langsung ke dalam hasil akhir compositing tanpa perlu dimodelkan ulang dalam bentuk 3D.' },
+          { id: 'E', text: 'Mempercepat proses animasi gerakan (inbetweening) secara otomatis tanpa memedulikan konsistensi desain karakter.' }
+        ],
+        correctAnswer: 'B',
+        explanation: 'AI sangat efektif sebagai pemantik ide awal (ideation/brainstorming) untuk efisiensi waktu riset. Namun, karena AI belum menjamin konsistensi teknis/perspektif untuk kebutuhan animasi 3D, hasil AI harus disempurnakan dan ditegaskan ulang oleh Concept Artist profesional menjadi model sheet atau turnaround sheet yang presisi.'
+      },
+      {
+        id: 3,
+        type: 'single',
+        categoryName: 'Pilihan Ganda Sederhana',
+        stimulusTitle: 'Analisis Kesehatan Pekerja Kreatif di Studio "AnimaWorks"',
+        stimulus: `Seorang 2D Clean-up Artist di Studio "AnimaWorks" mengeluhkan rasa nyeri tajam berulang pada pergelangan tangan kanan, kesemutan di bagian jari tangan, serta pegal di area leher dan punggung bawah setelah bekerja 9 jam sehari di depan pen tablet. Setelah dievaluasi oleh tim Kesehatan dan Keselamatan Kerja (K3), ditemukan bahwa ketinggian kursi kerja tidak dapat disesuaikan, posisi siku menggantung saat menggambar, dan seniman tersebut jarang mengambil jeda istirahat singkat (micro-breaks).`,
+        question: 'Berdasarkan analisis ergonomi kerja bidang animasi, tindakan pencegahan K3 paling tepat untuk mengatasi gangguan kesehatan Repetitive Strain Injury (RSI) dan Carpal Tunnel Syndrome pada seniman tersebut adalah ...',
+        options: [
+          { id: 'A', text: 'Mengganti semua pen tablet dengan tetikus (mouse) biasa untuk memotong biaya operasional studio.' },
+          { id: 'B', text: 'Meminta seniman menambah jam kerja harian agar target mingguan cepat selesai dan bisa libur panjang.' },
+          { id: 'C', text: 'Mengatur posisi ergonomis duduk (posisi siku 90°, layar sejajar mata) serta menerapkan aturan istirahat berkala 20-20-20 rule dan peregangan otot.' },
+          { id: 'D', text: 'Menurunkan resolusi monitor menggambar agar mata seniman tidak mudah lelah.' },
+          { id: 'E', text: 'Menyerahkan seluruh pekerjaan menggambar kepada animator lain tanpa mengubah peralatan kerja.' }
+        ],
+        correctAnswer: 'C',
+        explanation: 'Keluhan nyeri pergelangan tangan (RSI/Carpal Tunnel) dan pegal leher disebabkan oleh posisi kerja yang tidak ergonomis. Penerapan K3 animasi menekankan postur tubuh yang benar (siku 90°, layar sejajar mata) serta latihan peregangan dan jeda istirahat teratur (20-20-20 rule).'
+      },
+      {
+        id: 4,
+        type: 'single',
+        categoryName: 'Pilihan Ganda Sederhana',
+        stimulusTitle: 'Manajemen Aset dan Standard Operating Procedure (SOP) File Animasi',
+        stimulus: `Di sebuah studio animasi, terjadi kekacauan saat proses compositing. Tim compositor menerima file rekaman animasi dari berbagai animator dengan penamaan file yang tidak seragam, seperti: animasi_bagus.blend, bobby_jalan_v2_final.blend, dan fix_banget_final_revisi3.blend. Hal ini mengakibatkan terjadinya salah tautan aset (missing links), tertukarnya versi adegan terbaru dengan lama, dan pembengkakan durasi kerja hingga 3 hari hanya untuk merapikan data.`,
+        question: 'Rekomendasi penyusunan SOP Manajemen Aset Data yang paling efektif untuk mencegah terulangnya masalah tersebut di studio adalah ...',
+        options: [
+          { id: 'A', text: 'Mengizinkan setiap animator menggunakan nama folder sesuai selera pribadi selama dikirim tepat waktu.' },
+          { id: 'B', text: 'Menerapkan konvensi penamaan file (file naming convention) terstruktur baku (contoh: [Proyek]_[Episode]_[Scene]_[Shot]_[Task]_[Versi]) serta sistem kontrol versi pusat.' },
+          { id: 'C', text: 'Menghapus semua file cadangan (backup) lama dan hanya menyisakan satu file di komputer masing-masing animator.' },
+          { id: 'D', text: 'Menyimpan seluruh file kerja di media penyimpan kilat (flashdisk) yang digilirkan antar-anggota tim.' },
+          { id: 'E', text: 'Mengubah semua format file proyek (native format) menjadi file video MP4 terkompresi sebelum dikirim ke tim compositor.' }
+        ],
+        correctAnswer: 'B',
+        explanation: 'SOP manajemen aset digital yang profesional mewajibkan penamaan terstruktur (misal: NS_EP01_SC02_SH05_ANIM_v003.blend) dan penyimpanan terpusat (server/cloud) agar alur kerja efisien dan minim human error.'
+      },
+      {
+        id: 5,
+        type: 'single',
+        categoryName: 'Pilihan Ganda Sederhana',
+        stimulusTitle: 'Sengketa Karakter "Si Kiko" dan Hak Kekayaan Intelektual (HAKI)',
+        stimulus: `Seorang pencipta komik independen merilis karakter animasi bernama "Si Kiko" di media sosial pada tahun 2021 dan telah terdaftar Hak Cipta (Copyright)-nya di Dirjen HAKI. Pada tahun 2024, sebuah perusahaan minuman ringan menggunakan wujud visual "Si Kiko" secara utuh pada kemasan produk minuman mereka tanpa seizin pencipta untuk kampanye komersial secara nasional. Perusahaan mengklaim bahwa gambar tersebut diambil secara bebas dari Google Images sehingga tergolong Public Domain.`,
+        question: 'Berdasarkan Hukum Hak Cipta dan regulasi Intellectual Property (IP), evaluasi hukum yang paling tepat terhadap klaim perusahaan minuman tersebut adalah ...',
+        options: [
+          { id: 'A', text: 'Klaim perusahaan benar, karena semua gambar di internet otomatis menjadi hak publik (Public Domain) setelah diunggah.' },
+          { id: 'B', text: 'Klaim perusahaan salah, karena ciptaan yang diunggah di internet tetap dilindungi Hak Cipta, dan penggunaan komersial tanpa lisensi resmi merupakan pelanggaran hukum HAKI.' },
+          { id: 'C', text: 'Perusahaan sah menggunakan karakter tersebut asal mencantumkan nama akun media sosial pencipta di bagian bawah kemasan.' },
+          { id: 'D', text: 'Pencipta tidak berhak menuntut karena Hak Cipta animasi hanya berlaku jika produk sudah dibuatkan film panjang di bioskop.' },
+          { id: 'E', text: 'Karakter menjadi milik publik jika penciptanya tidak menjual mainan fisik (merchandise) karakter tersebut.' }
+        ],
+        correctAnswer: 'B',
+        explanation: 'Hak Cipta timbul secara otomatis setelah ciptaan diwujudkan dalam bentuk nyata dan pendaftarannya memberikan perlindungan hukum yang kuat. Gambar di internet tidak otomatis menjadi Public Domain. Penggunaan karakter untuk komersial tanpa izin/lisensi resmi merupakan pelanggaran hukum.'
+      },
+      {
+        id: 6,
+        type: 'single',
+        categoryName: 'Pilihan Ganda Sederhana',
+        stimulusTitle: 'Etika Profesi dalam Penggunaan Aset 3D Pasar Digital (Asset Marketplace)',
+        stimulus: `Dalam sebuah proyek iklan animasi TV beranggaran tinggi, seorang 3D Generalist dikejar tenggat waktu yang sangat ketat. Ia memutuskan untuk mengunduh aset model gedung 3D lisensi non-komersial (Personal Use Only) dari pasar digital gratisan, lalu langsung memasukkannya ke dalam adegan iklan produk tanpa melakukan modifikasi atau membeli lisensi komersial (Commercial License). Iklan tersebut akhirnya tayang nasional.`,
+        question: 'Ditinjau dari kode etik profesi dan standar industri animasi, tindakan yang dilakukan oleh 3D Generalist tersebut tergolong ...',
+        options: [
+          { id: 'A', text: 'Tindakan kreatif yang efisien karena berhasil menghemat anggaran biaya produksi studio.' },
+          { id: 'B', text: 'Pelanggaran etika profesi dan lisensi hak cipta, karena menggunakan aset lisensi non-komersial untuk kepentingan komersial perusahaan.' },
+          { id: 'C', text: 'Wajar dan biasa dilakukan oleh semua studio profesional saat mengalami kepepet tenggat waktu (deadline).' },
+          { id: 'D', text: 'Pelanggaran K3 karena membuat komputer studio berisiko terkena virus saat mengunduh aset.' },
+          { id: 'E', text: 'Tindakan yang sah selama pemilik asli aset 3D tersebut tidak tinggal di negara yang sama.' }
+        ],
+        correctAnswer: 'B',
+        explanation: 'Kode etik industri animasi mewajibkan setiap seniman untuk menghormati syarat lisensi aset pihak ketiga. Menggunakan aset berlisensi Personal/Non-Commercial Use untuk tujuan komersial merupakan pelanggaran etika serius dan dapat diseret ke ranah hukum.'
+      },
+      {
+        id: 7,
+        type: 'single',
+        categoryName: 'Pilihan Ganda Sederhana',
+        stimulusTitle: 'Bahasa Bentuk (Shape Language) dalam Desain Karakter',
+        stimulus: `Seorang Character Designer diminta menciptakan tokoh antagonis utama untuk serial animasi anak-anak. Karakter ini digambarkan memiliki sifat licik, tajam, berbahaya, dan tidak dapat diprediksi. Designer memilih dominasi elemen visual berupa garis-garis bersudut lancip, bentuk geometris segitiga terbalik pada area wajah dan kostum, serta kombinasi warna kontras tinggi (merah tua dan hitam).`,
+        question: 'Mengapa penggunaan bentuk geometris segitiga bersudut lancip paling efektif secara psikologi visual untuk menyampaikan sifat karakter antagonis tersebut?',
+        options: [
+          { id: 'A', text: 'Bentuk segitiga melambangkan kestabilan, kedamaian, dan kelembutan emosi karakter.' },
+          { id: 'B', text: 'Bentuk bersudut lancip secara ketidaksadaran psikologis menyampaikan kesan ketajaman, ancaman, dinamis, dan ketidakstabilan.' },
+          { id: 'C', text: 'Segitiga adalah bentuk paling mudah diproses oleh software 3D modeling.' },
+          { id: 'D', text: 'Bentuk lancip otomatis membuat gerakan inbetween animasi menjadi lebih cepat.' },
+          { id: 'E', text: 'Garis melengkung dan lingkaran sebenarnya lebih menakutkan daripada bentuk segitiga bersudut.' }
+        ],
+        correctAnswer: 'B',
+        explanation: 'Dalam Shape Language, lingkaran mengesankan kelembutan/ramah, persegi mengesankan kokoh/stabil, dan segitiga/sudut lancip mengesankan ketajaman, ancaman, bahaya, serta sifat licik (antagonis).'
+      },
+      {
+        id: 8,
+        type: 'single',
+        categoryName: 'Pilihan Ganda Sederhana',
+        stimulusTitle: 'Penerapan Prinsip Animasi pada Adegan Melompat',
+        stimulus: `Perhatikan deskripsi gerakan karakter bola karet saat melompat dan jatuh menghantam lantai berikut:
+1. Sebelum melompat naik, bola melesak sedikit memendek ke bawah untuk mengumpulkan tenaga.
+2. Saat melayang dengan kecepatan tinggi, bentuk bola memanjang searah lintasannya.
+3. Saat menghantam lantai tipis, bola menggepeng secara horisontal namun volume total bola tetap sama.
+4. Bola kembali memantul ke atas.`,
+        question: 'Prinsip utama animasi yang diterapkan untuk menjaga Ilusi bobot (weight) dan kelenturan bola tanpa mengubah volume pada poin 3 adalah ...',
+        options: [
+          { id: 'A', text: 'Follow Through and Overlapping Action' },
+          { id: 'B', text: 'Squash and Stretch' },
+          { id: 'C', text: 'Secondary Action' },
+          { id: 'D', text: 'Arc' },
+          { id: 'E', text: 'Exaggeration' }
+        ],
+        correctAnswer: 'B',
+        explanation: 'Squash and Stretch (Mengempet dan Merenggang) memberikan ilusi kelenturan dan berat pada objek/karakter. Kunci utama prinsip ini adalah volume objek harus selalu konstan/sama meskipun bentuk fisiknya menggepeng atau memanjang.'
+      },
+      {
+        id: 9,
+        type: 'single',
+        categoryName: 'Pilihan Ganda Sederhana',
+        stimulusTitle: 'Analisis Lembar Kerja Waktu (Timing Chart) dan Keyframe',
+        stimulus: `Seorang animator sedang membuat gerakan karakter menolehkan kepala dari Kiri (Keyframe 1) ke Kanan (Keyframe 2). Animator menginginkan gerakan menoleh diawali secara perlahan, kemudian bergerak cepat di tengah, dan berhenti secara halus saat menoleh ke kanan.
+
+Diagram Timing Chart:
+[Key 1]------|---|-------[Key 2]
+             IB1 IB2`,
+        question: 'Prinsip spacing yang diterapkan pada timing chart di atas untuk menghasilkan gerakan percepatan dan perlambatan yang halus adalah ...',
+        options: [
+          { id: 'A', text: 'Staging dan Solid Drawing' },
+          { id: 'B', text: 'Slow In dan Slow Out (Ease In / Ease Out)' },
+          { id: 'C', text: 'Straight Ahead Action' },
+          { id: 'D', text: 'Appeal dan Exaggeration' },
+          { id: 'E', text: 'Kinematics dan Rigging' }
+        ],
+        correctAnswer: 'B',
+        explanation: 'Slow In and Slow Out (Ease In/Out) mengatur jarak (spacing) antar-frame. Dengan menumpuk gambar lebih rapat di dekat Keyframe awal dan akhir, gerakan akan berakselerasi secara halus di awal dan melambat di akhir.'
+      },
+      {
+        id: 10,
+        type: 'single',
+        categoryName: 'Pilihan Ganda Sederhana',
+        stimulusTitle: 'Penyusunan Storyboard dan Bahasa Kamera (Cinematography)',
+        stimulus: `Dalam naskah cerita film animasi drama, terdapat adegan di mana tokoh utama merasa sangat kecil, terisolasi, dan tidak berdaya saat berdiri sendirian di tengah lapangan sekolah yang luas setelah menerima kabar buruk. Sutradara meminta Storyboard Artist memilih tipe sudut pengambilan gambar (camera angle) dan ukuran bingkai (shot size) yang tepat untuk menegaskan kondisi emosional psikologis karakter tersebut.`,
+        question: 'Kombinasi shot size dan camera angle paling efektif pada storyboard untuk menyampaikan kesan isolasi dan ketidakberdayaan karakter adalah ...',
+        options: [
+          { id: 'A', text: 'Close-Up dengan sudut kamera Low Angle (kamera dari bawah mendongak ke atas).' },
+          { id: 'B', text: 'Extreme Long Shot / High Angle (kamera dari atas menatap ke bawah dari jarak jauh).' },
+          { id: 'C', text: 'Medium Shot dengan sudut kamera Eye-Level (sejajar mata).' },
+          { id: 'D', text: 'Extreme Close-Up pada bagian mata dengan sudut kamera Dutch Angle datar.' },
+          { id: 'E', text: 'Over the Shoulder Shot dari jarak sangat dekat.' }
+        ],
+        correctAnswer: 'B',
+        explanation: 'Extreme Long Shot (ELS) memperlihatkan lingkungan luas dan membuat subjek tampak kecil. High Angle (kamera dari atas) memberikan pesan psikologis bahwa karakter dalam posisi lemah, tertekan, dan terisolasi.'
+      },
+      {
+        id: 11,
+        type: 'mcma',
+        categoryName: 'Pilihan Ganda Kompleks (MCMA)',
+        stimulusTitle: 'Diversifikasi Produk dan Peluang Usaha Industri Animasi',
+        stimulus: `Perkembangan teknologi digital memperluas spektrum peluang usaha bagi lulusan SMK Animasi. Industri tidak lagi terbatas pada pembuatan film animasi panjang (feature film) untuk bioskop. Banyak studio skala kecil dan menengah (SME) yang berhasil bertahan dan berkembang pesat dengan mengambil ceruk pasar (niche market) di luar media hiburan layar lebar.`,
+        question: 'Manakah dari pilihan berikut yang merupakan peluang usaha dan jenis produk animasi di luar industri film bioskop yang memiliki tingkat permintaan tinggi di pasar saat ini? (Pilih lebih dari satu jawaban benar)',
+        options: [
+          { id: 'A', text: 'Pembuatan video penjelasan animasi (explainer video) untuk pemasaran produk perusahaan.' },
+          { id: 'B', text: 'Pengembangan aset animasi 3D dan efek visual (VFX) untuk industri gim (game development).' },
+          { id: 'C', text: 'Pencetakan buku novel teks tanpa gambar ilustrasi untuk perpustakaan sekolah.' },
+          { id: 'D', text: 'Pembuatan konten animasi pendek interaktif untuk media sosial dan avatar kreator (VTuber).' },
+          { id: 'E', text: 'Perakitan perangkat keras (hardware) komputer server untuk pabrik otomotif.' }
+        ],
+        correctAnswer: ['A', 'B', 'D'],
+        explanation: 'Explainer video, aset game 3D/VFX, serta konten animasi medsos/VTuber adalah peluang usaha & produk industri animasi jasa/kreatif berdaya jual tinggi saat ini.'
+      },
+      {
+        id: 12,
+        type: 'mcma',
+        categoryName: 'Pilihan Ganda Kompleks (MCMA)',
+        stimulusTitle: 'Kontrol Kualitas Produksi (Quality Control) pada Post-Production',
+        stimulus: `Sebelum serial animasi 2D diserahkan (handover) kepada stasiun televisi atau platform streaming, tim Quality Assurance (QA) studio harus memeriksa teknis standar kualitas produksi agar tidak ditolak (reject) oleh pihak penayang.`,
+        question: 'Manakah parameter teknis berikut yang wajib diperiksa dalam proses Quality Control tahap Post-Production animasi? (Pilih lebih dari satu jawaban benar)',
+        options: [
+          { id: 'A', text: 'Konsistensi laju bingkai (Frame Rate/FPS) sesuai standar media tayang (misal: 24 FPS atau 25 FPS).' },
+          { id: 'B', text: 'Sinkronisasi antara gerak bibir (lip-sync) karakter dengan trek audio dialog (dubbing).' },
+          { id: 'C', text: 'Jumlah ruang makan pekerja yang tersedia di gedung studio.' },
+          { id: 'D', text: 'Resolusi output video dan ruang warna (color space) agar tidak pecah/berubah warna saat ditayangkan.' },
+          { id: 'E', text: 'Jumlah pengikut (followers) media sosial milik sutradara film.' }
+        ],
+        correctAnswer: ['A', 'B', 'D'],
+        explanation: 'Parameter teknis QC animasi meliputi konsistensi FPS, lip-sync audio-visual, serta ketepatan resolusi dan ruang warna (color space).'
+      },
+      {
+        id: 13,
+        type: 'mcma',
+        categoryName: 'Pilihan Ganda Kompleks (MCMA)',
+        stimulusTitle: 'Pro dan Kontra Pemanfaatan AI Voice Acting dalam Animasi',
+        stimulus: `Penggunaan kecerdasan buatan untuk menggenerasi suara (AI Voice Generator) memungkinkan studio memproduksi sulih suara (dubbing) karakter dalam berbagai bahasa secara otomatis hanya dengan menginput teks dialog. Hal ini memotong biaya produksi secara drastis. Namun, terdapat perdebatan etis dan kualitas mengenai teknologi ini.`,
+        question: 'Manakah isu etik dan keterbatasan teknis yang muncul dari pemanfaatan AI Voice Generator pada produksi animasi? (Pilih lebih dari satu jawaban benar)',
+        options: [
+          { id: 'A', text: 'Potensi pelanggaran hak cipta jika suara pengisi suara (voice actor) manusia dikloning tanpa izin/lisensi.' },
+          { id: 'B', text: 'Minimnya kedalaman emosi, artikulasi dinamik, dan penjiwaan karakter jika dibandingkan dengan performa voice actor manusia.' },
+          { id: 'C', text: 'AI suara membuat ukuran file rekaman video animasi membengkak menjadi ribuan Terabyte.' },
+          { id: 'D', text: 'Terancamnya lapangan kerja bagi profesi pengisi suara (voice actor) lokal.' },
+          { id: 'E', text: 'AI suara otomatis membuat komputer rendering terbakar secara fisik.' }
+        ],
+        correctAnswer: ['A', 'B', 'D'],
+        explanation: 'Pemanfaatan AI suara memicu isu etika berupa potensi klaim lisensi kloning suara tanpa izin, penurunan kualitas emosi/penjiwaan alami, serta ancaman terhadap profesi voice actor.'
+      },
+      {
+        id: 14,
+        type: 'mcma',
+        categoryName: 'Pilihan Ganda Kompleks (MCMA)',
+        stimulusTitle: 'Prosedur Keselamatan Kerja dan Keamanan Data di Studio Animasi',
+        stimulus: `Studio animasi bekerja dengan banyak perangkat elektronik berdaya tinggi (komputer render farm, monitor grafis, server daya). Selain kesehatan fisik pekerja, keselamatan fasilitas dan keamanan data digital studio menjadi bagian dari penerapan K3 dan SOP Budaya Kerja industri.`,
+        question: 'Manakah prosedur K3 dan keamanan sistem kerja yang tepat diterapkan di lingkungan studio animasi? (Pilih lebih dari satu jawaban benar)',
+        options: [
+          { id: 'A', text: 'Penataan instalasi kabel listrik komputer secara rapi menggunakan cable management untuk mencegah arus pendek dan risiko tersandung.' },
+          { id: 'B', text: 'Melakukan skema pencadangan data otomatis (automatic cloud/server backup) secara berkala untuk mencegah kehilangan data akibat kerusakan harddisk.' },
+          { id: 'C', text: 'Meletakkan botol air minum terbuka tepat di atas CPU komputer rendering agar mudah dijangkau saat haus.' },
+          { id: 'D', text: 'Menggunakan sistem daya bebas gangguan (Uninterruptible Power Supply / UPS) pada komputer produksi untuk mencegah kerusakan file saat listrik padam mendadak.' },
+          { id: 'E', text: 'Membiarkan ruangan server bersuhu panas tanpa pendingin udara (AC) untuk menghemat listrik.' }
+        ],
+        correctAnswer: ['A', 'B', 'D'],
+        explanation: 'Prosedur K3 dan keamanan data yang benar meliputi perapian kabel (cable management), pencadangan data otomatis (backup), serta penggunaan UPS untuk mencegah data terkorupsi saat mati listrik.'
+      },
+      {
+        id: 15,
+        type: 'mcma',
+        categoryName: 'Pilihan Ganda Kompleks (MCMA)',
+        stimulusTitle: 'Strategi Monetisasi dan Lisensi Intellectual Property (IP)',
+        stimulus: `Sebuah studio animasi berhasil mempopulerkan IP karakter lokal bernama "Garuda Cilik" melalui platform streaming digital. Agar IP ini memberikan pendapatan berkelanjutan (passive income), studio berencana melakukan monetisasi lintas media (cross-media monetization).`,
+        question: 'Manakah langkah monetisasi IP yang sah secara hukum HAKI dan berpotensi meningkatkan nilai komersial dari karakter animasi tersebut? (Pilih lebih dari satu jawaban benar)',
+        options: [
+          { id: 'A', text: 'Menjual lisensi penggunaan karakter (character licensing) kepada produsen mainan anak untuk diproduksi menjadi action figure.' },
+          { id: 'B', text: 'Memunculkan karakter dalam bentuk produk barang konsumsi (merchandising) seperti kaos, tas, dan alat tulis.' },
+          { id: 'C', text: 'Mengklaim dan menjual karakter ciptaan studio lain sebagai bagian dari cerita "Garuda Cilik" tanpa izin.' },
+          { id: 'D', text: 'Bekerja sama dengan pengembang gim untuk mengadaptasi karakter IP menjadi permainan interaktif (mobile game).' },
+          { id: 'E', text: 'Menghapus pendaftaran HAKI agar orang lain bisa bebas memakai karakter tanpa perlu membayar royalty.' }
+        ],
+        correctAnswer: ['A', 'B', 'D'],
+        explanation: 'Monetisasi IP yang legal mencakup lisensi karakter untuk action figure, barang konsumsi (merchandising), dan adaptasi media interaktif (game).'
+      },
+      {
+        id: 16,
+        type: 'mcma',
+        categoryName: 'Pilihan Ganda Kompleks (MCMA)',
+        stimulusTitle: 'Prinsip Desain dalam Penyusunan Tata Letak (Layout) Adegan',
+        stimulus: `Seorang Layout Artist bertugas menyusun tata letak latar belakang (background) dan posisi karakter dalam sebuah scene animasi. Ia harus memastikan perhatian penonton (eye direction) langsung tertuju pada titik fokus utama adegan (focal point).`,
+        question: 'Prinsip desain dan komposisi visual manakah yang dapat dimanfaatkan Layout Artist untuk menciptakan focal point yang kuat dalam adegan animasi? (Pilih lebih dari satu jawaban benar)',
+        options: [
+          { id: 'A', text: 'Penerapan Rule of Thirds (Aturan Sepertiga) dalam menempatkan objek utama.' },
+          { id: 'B', text: 'Penggunaan garis pengarah (leading lines) dari elemen lingkungan yang mengarah ke objek utama.' },
+          { id: 'C', text: 'Memberikan kontras warna atau pencahayaan (lighting) yang lebih terang pada area objek utama dibandingkan latar belakang.' },
+          { id: 'D', text: 'Mewarnai seluruh elemen dalam adegan dengan tingkat kecerahan (brightness) dan saturasi yang identik secara murni.' },
+          { id: 'E', text: 'Menyembunyikan karakter utama di balik objek latar depan yang sangat besar tanpa terlihat sama sekali.' }
+        ],
+        correctAnswer: ['A', 'B', 'C'],
+        explanation: 'Focal point dikreasikan dengan komposisi Rule of Thirds, leading lines yang mengarahkan pandangan, serta kontras warna/pencahayaan yang mempertegas objek utama.'
+      },
+      {
+        id: 17,
+        type: 'mcma',
+        categoryName: 'Pilihan Ganda Kompleks (MCMA)',
+        stimulusTitle: 'Penerapan Prinsip Follow Through dan Overlapping Action',
+        stimulus: `Saat seorang karakter prajurit berbaju zirah tebal dan memiliki rambut panjang kuncir kuda berhenti berlari secara mendadak, tubuh bagian dada dan kakinya berhenti terlebih dahulu. Namun, bagian rambut kuncir kuda, kain jubah belakang, dan sarung pedangnya baru berhenti beberapa frame kemudian melampaui posisi titik henti tubuh utama.`,
+        question: 'Pernyataan yang benar menggambarkan prinsip animasi pada adegan di atas adalah ... (Pilih lebih dari satu jawaban benar)',
+        options: [
+          { id: 'A', text: 'Adegan tersebut menerapkan prinsip Follow Through karena bagian tubuh yang lentur/bebas tetap bergerak meskipun tubuh utama telah berhenti.' },
+          { id: 'B', text: 'Adegan tersebut menerapkan prinsip Overlapping Action karena bagian-bagian tubuh bergerak dengan kecepatan dan waktu henti yang berbeda (tidak bersamaan).' },
+          { id: 'C', text: 'Prinsip yang digunakan adalah Solid Drawing karena karakter digambar menggunakan pensil 2B.' },
+          { id: 'D', text: 'Keberadaan jubah dan rambut yang menyusul bergerak memberikan ilusi kelenturan, inersia, dan berat yang realistis.' },
+          { id: 'E', text: 'Gerakan menyusul tersebut merupakan kesalahan glitch teknik yang harus dihapus oleh animator.' }
+        ],
+        correctAnswer: ['A', 'B', 'D'],
+        explanation: 'Follow Through adalah gerakan lanjutan bagian terikat setelah tubuh utama berhenti, sedangkan Overlapping Action adalah perbedaan waktu gerak antar-bagian tubuh. Keduanya memberikan ilusi inersia dan kelenturan.'
+      },
+      {
+        id: 18,
+        type: 'mcma',
+        categoryName: 'Pilihan Ganda Kompleks (MCMA)',
+        stimulusTitle: 'Teknik Pembuatan Gerak: Pose to Pose vs Straight Ahead Action',
+        stimulus: `Seorang animator sedang menggarap adegan aksi pertarungan kompleks yang membutuhkan kontrol timing, proporsi karakter yang sangat presisi, serta posisi keypose yang jelas. Di sisi lain, untuk adegan lidah api yang berkibar acak dan gumpalan asap ledakan, ia menggunakan metode pembuatan gerak yang berbeda.`,
+        question: 'Manakah analisis yang tepat mengenai penggunaan metode animasi berdasarkan adegan di atas? (Pilih lebih dari satu jawaban benar)',
+        options: [
+          { id: 'A', text: 'Metode Pose to Pose sangat cocok untuk adegan pertarungan karakter karena mengutamakan perencanaan keypose, breakdown, dan kontrol proporsi yang matang.' },
+          { id: 'B', text: 'Metode Straight Ahead Action sangat ideal untuk animasi efek organik seperti api, air, dan asap karena gerakannya spontan dan mengalir frame demi frame.' },
+          { id: 'C', text: 'Metode Pose to Pose dilakukan dengan menggambar secara berurutan dari frame 1, 2, 3, 4 tanpa merencanakan kunci gambar akhir.' },
+          { id: 'D', text: 'Dalam metode Pose to Pose, posisi inbetween digambar setelah gambar Keypose utama telah selesai dibuat dan diperiksa timing-nya.' },
+          { id: 'E', text: 'Metode Straight Ahead Action tidak bisa diterapkan pada animasi 2D maupun 3D.' }
+        ],
+        correctAnswer: ['A', 'B', 'D'],
+        explanation: 'Pose-to-pose unggul untuk aksi terencana yang butuh kestabilan proporsi/keypose. Straight Ahead Action ideal untuk gerakan organik/spontan seperti air, api, dan asap.'
+      },
+      {
+        id: 19,
+        type: 'mcma',
+        categoryName: 'Pilihan Ganda Kompleks (MCMA)',
+        stimulusTitle: 'Pergerakan Kamera (Camera Movement) pada Storyboard',
+        stimulus: `Untuk memberikan dinamika visual dalam adegan kejar-kejaran mobil di animasi aksi, Storyboard Artist menambahkan instruksi pergerakan kamera pada lembar papan cerita.`,
+        question: 'Manakah istilah teknis pergerakan kamera berikut yang tepat beserta fungsinya dalam storyboard? (Pilih lebih dari satu jawaban benar)',
+        options: [
+          { id: 'A', text: 'Panning: Kamera bergerak menyapu secara horisontal (ke kiri atau ke kanan) dari posisi poros yang tetap.' },
+          { id: 'B', text: 'Tilting: Kamera bergerak mendongak ke atas atau menunduk ke bawah secara vertikal.' },
+          { id: 'C', text: 'Tracking / Dolly: Kamera bergerak fisik mendekati (Dolly In) atau menjauhi (Dolly Out) objek menggunakan rel/roda.' },
+          { id: 'D', text: 'Zoom In: Kamera berpindah tempat secara fisik sejauh 10 kilometer melintasi pegunungan.' },
+          { id: 'E', text: 'Rendering: Pergerakan kamera melingkar yang memotong gambar secara otomatis.' }
+        ],
+        correctAnswer: ['A', 'B', 'C'],
+        explanation: 'Panning (gerak menyapu horisontal), Tilting (gerak vertikal atas/bawah), dan Dolly/Tracking (gerak fisik kamera mendekat/menjauh) adalah standar bahasa pergerakan kamera.'
+      },
+      {
+        id: 20,
+        type: 'mcma',
+        categoryName: 'Pilihan Ganda Kompleks (MCMA)',
+        stimulusTitle: 'Struktur Cerita Tiga Babak (Three-Act Structure) dalam Narasi Animasi',
+        stimulus: `Sebuah film animasi pendek mengikuti struktur naratif klasik Three-Act Structure. Penulis naskah menyusun alur agar penonton dapat terikat secara emosional dengan perjalanan tokoh utama dari awal hingga akhir.`,
+        question: 'Manakah pemetaan peristiwa yang sesuai dengan fungsi masing-masing babak dalam Three-Act Structure? (Pilih lebih dari satu jawaban benar)',
+        options: [
+          { id: 'A', text: 'Act 1 (Exposition/Setup): Mengenalkan karakter utama, dunianya, serta memicu peristiwa pemicu konflik (inciting incident).' },
+          { id: 'B', text: 'Act 2 (Confrontation/Rising Action): Karakter menghadapi rintangan yang semakin meningkat, kegagalan, dan krisis menuju titik puncak konflik.' },
+          { id: 'C', text: 'Act 3 (Resolution): Terjadinya klimaks pertempuran/puncak masalah dan penyelesaian dampak konflik serta kondisi new normal bagi karakter.' },
+          { id: 'D', text: 'Act 1 (Setup): Tempat di mana cerita ditutup dan daftar nama pembuat film (credit title) ditayangkan.' },
+          { id: 'E', text: 'Act 2 (Confrontation): Bagian yang khusus diisi tayangan iklan komersial dari sponsor film.' }
+        ],
+        correctAnswer: ['A', 'B', 'C'],
+        explanation: 'Three-Act Structure terdiri atas Act 1 (Exposition/Setup & Inciting Incident), Act 2 (Rising Action, Obstacles & Crisis), dan Act 3 (Climax & Resolution).'
+      },
+      {
+        id: 21,
+        type: 'category',
+        categoryName: 'Pilihan Ganda Kompleks Kategori',
+        categoryType: 'Benar / Salah',
+        stimulusTitle: 'Tahapan Produksi Animasi 2D Digital',
+        stimulus: `Dalam alur kerja (pipeline) animasi 2D digital modern, terdapat pembagian tahapan kerja yang jelas antara Pra-Produksi, Produksi, dan Pascaproduksi. Pra-produksi berfokus pada ideation dan perencanaan (naskah, character design, storyboard, animatic). Tahap produksi berfokus pada eksekusi visual (layout, key animating, inbetweening, clean-up, background painting, coloring). Tahap pascaproduksi berfokus pada penyatuan akhir (compositing, sound editing, color grading, rendering final).`,
+        question: 'Berdasarkan Stimulus 21, tentukan apakah setiap pernyataan mengenai pipeline animasi berikut BENAR atau SALAH!',
+        options: ['BENAR', 'SALAH'],
+        items: [
+          { id: 1, statement: 'Pembuatan storyboard dan animatic dilakukan pada tahap Pascaproduksi.', correctAnswer: 'SALAH' },
+          { id: 2, statement: 'Proses clean-up dan coloring karakter tergolong ke dalam tahapan Produksi.', correctAnswer: 'BENAR' },
+          { id: 3, statement: 'Compositing dan pengeditan efek suara (sound editing) dilakukan pada tahap Pascaproduksi.', correctAnswer: 'BENAR' },
+          { id: 4, statement: 'Background painting dikerjakan sebelum naskah cerita selesai dibuat pada pra-produksi.', correctAnswer: 'SALAH' },
+          { id: 5, statement: 'Animatic adalah versi video rekaman kasar dari storyboard yang disesuaikan dengan panduan durasi audio.', correctAnswer: 'BENAR' }
+        ],
+        explanation: '1. SALAH (Pra-produksi). 2. BENAR (Tahap Produksi). 3. BENAR (Pascaproduksi). 4. SALAH (Harus sesudah naskah/alur matang). 5. BENAR (Definisi animatic).'
+      },
+      {
+        id: 22,
+        type: 'category',
+        categoryName: 'Pilihan Ganda Kompleks Kategori',
+        categoryType: 'Sesuai / Tidak Sesuai',
+        stimulusTitle: 'Perlindungan HAKI dan Kasus Jiplakan (Plagiarisme) Karakter',
+        stimulus: `Seorang animator junior meniru 95% bentuk visual, palet warna, dan nama karakter milik studio luar negeri, lalu mengganti sedikit bentuk topi karakter tersebut dan mengklaimnya sebagai karya orisinal untuk diperjualbelikan di pasar digital lokal. Studio pemilik asli menemukan hal ini dan melayangkan surat teguran hukum (Cease and Desist).`,
+        question: 'Berdasarkan kasus di atas dan aturan perlindungan HAKI, tentukan apakah pernyataan berikut SESUAI atau TIDAK SESUAI!',
+        options: ['SESUAI', 'TIDAK SESUAI'],
+        items: [
+          { id: 1, statement: 'Tindakan animator junior tersebut merupakan bentuk pelanggaran hak cipta (plagiarisme).', correctAnswer: 'SESUAI' },
+          { id: 2, statement: 'Mengubah sedikit aksesori topi pada karakter jiplakan otomatis menghilangkan status pelanggaran hak cipta.', correctAnswer: 'TIDAK SESUAI' },
+          { id: 3, statement: 'Pemilik asli karya berhak secara hukum mengirimkan surat teguran (Cease and Desist) untuk menghentikan penjualan.', correctAnswer: 'SESUAI' },
+          { id: 4, statement: 'Karya animasi yang ditiru secara masif tanpa izin tetap dilindungi hukum selama pembuat aslinya memiliki bukti ciptaan.', correctAnswer: 'SESUAI' },
+          { id: 5, statement: 'Mengunduh dan menjual kembali karya orang lain tanpa izin dihalalkan dalam kode etik industri animasi.', correctAnswer: 'TIDAK SESUAI' }
+        ],
+        explanation: '1. SESUAI (Plagiarisme visual). 2. TIDAK SESUAI (Modifikasi minor tidak menghapus pelanggaran). 3. SESUAI (Surat teguran Cease & Desist sah). 4. SESUAI (Perlindungan HAKI). 5. TIDAK SESUAI (Melanggar etika).'
+      },
+      {
+        id: 23,
+        type: 'category',
+        categoryName: 'Pilihan Ganda Kompleks Kategori',
+        categoryType: 'Fakta / Opini',
+        stimulusTitle: 'Transisi Industri Animasi ke Era Kecerdasan Buatan (AI)',
+        stimulus: `(1) Berdasarkan laporan asosiasi industri, penggunaan AI dalam proses rendering 3D terbukti mampu memangkas waktu komputasi hingga 40%. (2) Semua animator tradisional yang tidak menggunakan AI dipastikan akan langsung kehilangan pekerjaan dalam waktu enam bulan ke depan. (3) Teknologi AI Motion Capture berbasis kamera tunggal kini dapat merekam gerak tubuh manusia menjadi data animasi 3D tanpa penanda fisik (markerless). (4) Alat AI adalah ancaman berbahaya yang tidak memiliki manfaat sama sekali bagi perkembangan seni animasi. (5) Integrasi AI yang bijak dapat membantu animator menghemat waktu pekerjaan repetitif sehingga bisa lebih fokus pada penceritaan kreatif.`,
+        question: 'Berdasarkan teks Stimulus 23, klasifikasikanlah setiap kalimat menjadi FAKTA atau OPINI!',
+        options: ['FAKTA', 'OPINI'],
+        items: [
+          { id: 1, statement: 'Kalimat (1): "Berdasarkan laporan asosiasi industri, penggunaan AI dalam proses rendering 3D terbukti mampu memangkas waktu komputasi hingga 40%."', correctAnswer: 'FAKTA' },
+          { id: 2, statement: 'Kalimat (2): "Semua animator tradisional yang tidak menggunakan AI dipastikan akan langsung kehilangan pekerjaan dalam waktu enam bulan ke depan."', correctAnswer: 'OPINI' },
+          { id: 3, statement: 'Kalimat (3): "Teknologi AI Motion Capture berbasis kamera tunggal kini dapat merekam gerak tubuh manusia menjadi data animasi 3D..."', correctAnswer: 'FAKTA' },
+          { id: 4, statement: 'Kalimat (4): "Alat AI adalah ancaman berbahaya yang tidak memiliki manfaat sama sekali bagi perkembangan seni animasi."', correctAnswer: 'OPINI' },
+          { id: 5, statement: 'Kalimat (5): "Integrasi AI yang bijak dapat membantu animator menghemat waktu pekerjaan repetitif..."', correctAnswer: 'OPINI' }
+        ],
+        explanation: '1 & 3 FAKTA (Memuat data dan bukti teknis objektif). 2, 4, & 5 OPINI (Memuat penilaian, spekulasi, atau pandangan subjektif).'
+      },
+      {
+        id: 24,
+        type: 'category',
+        categoryName: 'Pilihan Ganda Kompleks Kategori',
+        categoryType: 'Sesuai / Tidak Sesuai',
+        stimulusTitle: 'Penerapan Prinsip Anticipation dan Arc pada Gerakan Karakter',
+        stimulus: `Dalam animasi gerak dasar melempar bola bisbol, karakter tidak langsung melempar bola ke depan secara tiba-tiba. Karakter terlebih dahulu menarik tangannya ke belakang, memutar badan, dan mengangkat kaki depannya (Gerakan A). Saat bola dilempar melepaskan tangan, lintasan pergerakan bola serta ayunan tangan membentuk garis melengkung yang halus, bukan garis lurus yang kaku (Gerakan B).`,
+        question: 'Berdasarkan kasus animasi di atas, tentukan apakah analisis prinsip animasi berikut SESUAI atau TIDAK SESUAI!',
+        options: ['SESUAI', 'TIDAK SESUAI'],
+        items: [
+          { id: 1, statement: 'Gerakan A (menarik tangan ke belakang sebelum melempar) merupakan penerapan prinsip Anticipation.', correctAnswer: 'SESUAI' },
+          { id: 2, statement: 'Prinsip Anticipation berfungsi memberi ancang-ancang agar penonton siap memahami gerakan utama yang akan terjadi.', correctAnswer: 'SESUAI' },
+          { id: 3, statement: 'Gerakan B (lintasan melempar yang membentuk garis melengkung) merupakan penerapan prinsip Arc.', correctAnswer: 'SESUAI' },
+          { id: 4, statement: 'Sebagian besar gerakan alami manusia dan hewan di dunia nyata mengikuti pola garis kurva (Arc), bukan garis lurus sempurna.', correctAnswer: 'SESUAI' },
+          { id: 5, statement: 'Menghilangkan gerakan ancang-ancang (Anticipation) membuat gerakan melempar terasa lebih berbobot, alami, dan realistis.', correctAnswer: 'TIDAK SESUAI' }
+        ],
+        explanation: '1, 2, 3, & 4 SESUAI (Ancang-ancang = Anticipation, lintasan melengkung = Arc). 5 TIDAK SESUAI (Menghilangkan anticipation justru membuat gerakan terasa kaku/kaget).'
+      },
+      {
+        id: 25,
+        type: 'category',
+        categoryName: 'Pilihan Ganda Kompleks Kategori',
+        categoryType: 'Benar / Salah',
+        stimulusTitle: 'Penciptaan Suasana Adegan melalui Warna dan Lighting',
+        stimulus: `Sebuah scene dalam animasi menampilkan karakter yang sedang tersesat di dalam hutan tua pada malam hari. Untuk menyampaikan kesan cemas, misterius, dan mencekam, Lighting & Color Artist memilih skema warna dominan biru tua kehitaman dan hijau gelap (cool colors) dengan kontras pencahayaan rendah (low-key lighting), serta memberikan sedikit bayangan tajam pada wajah karakter.`,
+        question: 'Berdasarkan Stimulus 25, tentukan apakah setiap pernyataan mengenai unsur visual dan pencahayaan berikut BENAR atau SALAH!',
+        options: ['BENAR', 'SALAH'],
+        items: [
+          { id: 1, statement: 'Penggunaan cool colors (biru tua, hijau gelap) efektif membangun mood adegan malam yang dingin dan misterius.', correctAnswer: 'BENAR' },
+          { id: 2, statement: 'Low-key lighting (pencahayaan dengan dominasi bayangan dan kontras gelap) memperkuat suasana mencekam dan cemas.', correctAnswer: 'BENAR' },
+          { id: 3, statement: 'Warna merah cerah dan kuning terang (warm colors) lebih cocok digunakan untuk menggambarkan adegan tersesat malam hari yang menakutkan.', correctAnswer: 'SALAH' },
+          { id: 4, statement: 'Unsur warna dan pencahayaan dalam animasi tidak memiliki pengaruh psikologis terhadap emosi penonton.', correctAnswer: 'SALAH' },
+          { id: 5, statement: 'Pencahayaan (lighting) dalam animasi 3D juga berfungsi menciptakan kedalaman dimensi (depth) antara karakter dan latar belakang.', correctAnswer: 'BENAR' }
+        ],
+        explanation: '1 & 2 BENAR (Cool colors & low-key lighting membentuk mood mencekam). 3 & 4 SALAH (Warm colors untuk nuansa ceria/hangat, warna mempengaruhi psikologis). 5 BENAR (Lighting membentuk kedalaman dimensi).'
+      }
+    ];
+
+    // STATE VARIABLES
+    const STORAGE_KEY = 'tka_animasi_quiz_state_v1';
+    let currentQuestionIndex = 0;
+    let userAnswers = {}; // { qId: answerValue }
+    let flaggedQuestions = new Set();
+    let timeRemaining = 3600; // 60 minutes in seconds
+    let timerInterval = null;
+    let quizStarted = false;
+    let quizSubmitted = false;
+
+    function saveQuizState() {
+      if (!quizStarted) return;
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify({
+          currentQuestionIndex, userAnswers, flaggedQuestions: [...flaggedQuestions],
+          timeRemaining, quizStarted, quizSubmitted, savedAt: Date.now()
+        }));
+      } catch (error) { console.warn('State kuis tidak dapat disimpan:', error); }
+    }
+
+    function loadQuizState() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) return false;
+        const state = JSON.parse(raw);
+        if (!state || !state.quizStarted) return false;
+        currentQuestionIndex = Number.isInteger(state.currentQuestionIndex) ? Math.min(Math.max(state.currentQuestionIndex, 0), questions.length - 1) : 0;
+        userAnswers = state.userAnswers && typeof state.userAnswers === 'object' ? state.userAnswers : {};
+        flaggedQuestions = new Set(Array.isArray(state.flaggedQuestions) ? state.flaggedQuestions : []);
+        timeRemaining = Number.isFinite(state.timeRemaining) ? Math.max(0, Math.floor(state.timeRemaining)) : 3600;
+        // Kurangi waktu yang berlalu sejak state terakhir disimpan, termasuk saat tab ditutup/reload.
+        if (Number.isFinite(state.savedAt)) {
+          const elapsed = Math.max(0, Math.floor((Date.now() - state.savedAt) / 1000));
+          timeRemaining = Math.max(0, timeRemaining - elapsed);
+        }
+        quizStarted = true;
+        quizSubmitted = !!state.quizSubmitted;
+        return true;
+      } catch (error) {
+        console.warn('State kuis tidak dapat dipulihkan:', error);
+        localStorage.removeItem(STORAGE_KEY);
+        return false;
+      }
+    }
+
+    function clearQuizState() {
+      try { localStorage.removeItem(STORAGE_KEY); } catch (error) {}
+    }
+
+    // DOM ELEMENTS
+    const startScreen = document.getElementById('start-screen');
+    const quizScreen = document.getElementById('quiz-screen');
+    const resultScreen = document.getElementById('result-screen');
+    const quizHeaderInfo = document.getElementById('quiz-header-info');
+    const timerDisplay = document.getElementById('timer-display');
+    
+    // START QUIZ FUNCTION
+    function startQuiz() {
+      quizStarted = true;
+      quizSubmitted = false;
+      currentQuestionIndex = 0;
+      userAnswers = {};
+      flaggedQuestions = new Set();
+      timeRemaining = 3600;
+      clearInterval(timerInterval);
+      startScreen.classList.add('hidden');
+      resultScreen.classList.add('hidden');
+      quizScreen.classList.remove('hidden');
+      quizHeaderInfo.classList.remove('hidden');
+      quizHeaderInfo.classList.add('flex');
+      initNavGrid();
+      loadQuestion(0);
+      saveQuizState();
+      startTimer();
+    }
+
+    function restoreQuizState() {
+      if (!loadQuizState()) return;
+      startScreen.classList.add('hidden');
+      quizHeaderInfo.classList.remove('hidden');
+      quizHeaderInfo.classList.add('flex');
+      if (quizSubmitted) {
+        quizScreen.classList.add('hidden');
+        resultScreen.classList.remove('hidden');
+        quizHeaderInfo.classList.add('hidden');
+        renderResultsFromSavedState();
+        return;
+      }
+      quizScreen.classList.remove('hidden');
+      initNavGrid();
+      loadQuestion(currentQuestionIndex);
+      if (timeRemaining <= 0) { submitQuiz(); return; }
+      startTimer();
+    }
+
+    function resetQuiz() {
+      clearInterval(timerInterval);
+      clearQuizState();
+      location.reload();
+    }
+
+    // TIMER FUNCTIONALITY (60 MINS)
+    function startTimer() {
+      clearInterval(timerInterval);
+      updateTimerDisplay();
+      timerInterval = setInterval(() => {
+        timeRemaining--;
+        updateTimerDisplay();
+        saveQuizState();
+
+        if (timeRemaining <= 300) { // last 5 mins warning
+          timerDisplay.classList.add('text-rose-400', 'animate-pulse');
+        }
+
+        if (timeRemaining <= 0) {
+          clearInterval(timerInterval);
+          alert('Waktu ujian telah habis! Jawaban Anda akan otomatis dikirim.');
+          submitQuiz();
+        }
+      }, 1000);
+    }
+
+    function updateTimerDisplay() {
+      const minutes = Math.floor(timeRemaining / 60);
+      const seconds = timeRemaining % 60;
+      timerDisplay.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+    }
+
+    // NAV GRID INITIALIZATION
+    function initNavGrid() {
+      const grid = document.getElementById('nav-grid');
+      grid.innerHTML = '';
+
+      questions.forEach((q, idx) => {
+        const btn = document.createElement('button');
+        btn.id = `nav-btn-${idx}`;
+        btn.textContent = idx + 1;
+        btn.onclick = () => loadQuestion(idx);
+        btn.className = 'h-9 text-xs font-semibold rounded-lg border transition flex items-center justify-center relative bg-slate-100 border-slate-200 text-slate-700 hover:bg-slate-200';
+        grid.appendChild(btn);
+      });
+      updateNavGridState();
+    }
+
+    function updateNavGridState() {
+      questions.forEach((q, idx) => {
+        const btn = document.getElementById(`nav-btn-${idx}`);
+        if (!btn) return;
+
+        const isAnswered = isQuestionAnswered(q.id);
+        const isFlagged = flaggedQuestions.has(q.id);
+        const isCurrent = currentQuestionIndex === idx;
+
+        // Reset class
+        let bgClass = 'bg-slate-100 text-slate-700 border-slate-200';
+        if (isAnswered) bgClass = 'bg-indigo-600 text-white border-indigo-600';
+        if (isFlagged) bgClass = 'bg-amber-400 text-slate-900 border-amber-400';
+
+        let ringClass = isCurrent ? 'ring-2 ring-offset-1 ring-indigo-600 font-bold z-10' : '';
+
+        btn.className = `h-9 text-xs font-semibold rounded-lg border transition flex items-center justify-center relative ${bgClass} ${ringClass}`;
+      });
+
+      // Update counter
+      const answeredCount = questions.filter(q => isQuestionAnswered(q.id)).length;
+      document.getElementById('answered-counter').textContent = `${answeredCount} / 25 Dijawab`;
+    }
+
+    function isQuestionAnswered(qId) {
+      const ans = userAnswers[qId];
+      if (!ans) return false;
+      const q = questions.find(item => item.id === qId);
+      if (q.type === 'single') return !!ans;
+      if (q.type === 'mcma') return Array.isArray(ans) && ans.length > 0;
+      if (q.type === 'category') return typeof ans === 'object' && Object.keys(ans).length === q.items.length;
+      return false;
+    }
+
+    // LOAD QUESTION INTO VIEW
+    function loadQuestion(index) {
+      currentQuestionIndex = index;
+      const q = questions[index];
+
+      // Update Header Badges
+      document.getElementById('question-number-badge').textContent = `Soal ${index + 1} dari 25`;
+      document.getElementById('question-type-badge').textContent = q.categoryName;
+      
+      // Update Stimulus & Question
+      document.getElementById('stimulus-title').textContent = q.stimulusTitle;
+      document.getElementById('stimulus-body').textContent = q.stimulus;
+      document.getElementById('question-text').textContent = q.question;
+
+      // Update Flag state
+      const flagBtn = document.getElementById('flag-btn');
+      if (flaggedQuestions.has(q.id)) {
+        flagBtn.className = 'text-xs font-medium px-3 py-1 rounded-lg border transition flex items-center space-x-1 bg-amber-100 text-amber-700 border-amber-300';
+      } else {
+        flagBtn.className = 'text-xs font-medium px-3 py-1 rounded-lg border transition flex items-center space-x-1 text-slate-500 border-slate-300 hover:bg-slate-50';
+      }
+
+      // Render Answer Options
+      renderOptions(q);
+
+      // Nav buttons state
+      document.getElementById('btn-prev').disabled = index === 0;
+      const btnNext = document.getElementById('btn-next');
+      if (index === questions.length - 1) {
+        btnNext.innerHTML = `<span>Selesai</span> <i class="fa-solid fa-check ml-1"></i>`;
+        btnNext.onclick = showSubmitModal;
+      } else {
+        btnNext.innerHTML = `<span>Selanjutnya</span> <i class="fa-solid fa-chevron-right ml-1"></i>`;
+        btnNext.onclick = () => navigateQuestion(1);
+      }
+
+      updateNavGridState();
+    }
+
+    // RENDER OPTIONS BASED ON QUESTION TYPE
+    function renderOptions(q) {
+      const container = document.getElementById('answers-container');
+      container.innerHTML = '';
+
+      if (q.type === 'single') {
+        const currentAns = userAnswers[q.id] || '';
+        q.options.forEach(opt => {
+          const isSelected = currentAns === opt.id;
+          const div = document.createElement('label');
+          div.className = `flex items-start space-x-3 p-3.5 rounded-xl border transition cursor-pointer ${
+            isSelected ? 'bg-indigo-50 border-indigo-600 ring-1 ring-indigo-600' : 'bg-white border-slate-200 hover:bg-slate-50'
+          }`;
+          div.innerHTML = `
+            <input type="radio" name="q_${q.id}" value="${opt.id}" ${isSelected ? 'checked' : ''} onchange="saveSingleAnswer(${q.id}, '${opt.id}')" class="mt-1 text-indigo-600 focus:ring-indigo-500">
+            <span class="text-sm text-slate-700 leading-snug"><b class="text-indigo-900">${opt.id}.</b> ${opt.text}</span>
+          `;
+          container.appendChild(div);
+        });
+      } 
+      else if (q.type === 'mcma') {
+        const currentAns = userAnswers[q.id] || [];
+        q.options.forEach(opt => {
+          const isChecked = currentAns.includes(opt.id);
+          const div = document.createElement('label');
+          div.className = `flex items-start space-x-3 p-3.5 rounded-xl border transition cursor-pointer ${
+            isChecked ? 'bg-indigo-50 border-indigo-600 ring-1 ring-indigo-600' : 'bg-white border-slate-200 hover:bg-slate-50'
+          }`;
+          div.innerHTML = `
+            <input type="checkbox" value="${opt.id}" ${isChecked ? 'checked' : ''} onchange="saveMcmaAnswer(${q.id}, '${opt.id}', this.checked)" class="mt-1 text-indigo-600 rounded focus:ring-indigo-500">
+            <span class="text-sm text-slate-700 leading-snug"><b class="text-indigo-900">${opt.id}.</b> ${opt.text}</span>
+          `;
+          container.appendChild(div);
+        });
+      } 
+      else if (q.type === 'category') {
+        const currentAns = userAnswers[q.id] || {}; // { item1Id: 'BENAR' }
+        const table = document.createElement('div');
+        table.className = 'overflow-x-auto rounded-xl border border-slate-200';
+        
+        let tableHtml = `
+          <table class="w-full text-left text-xs md:text-sm">
+            <thead class="bg-slate-100 text-slate-700 uppercase font-semibold text-xs border-b border-slate-200">
+              <tr>
+                <th class="p-3">No</th>
+                <th class="p-3">Pernyataan</th>
+                <th class="p-3 text-center">Pilihan Kategori</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-200 bg-white">
+        `;
+
+        q.items.forEach(item => {
+          const val = currentAns[item.id] || '';
+          tableHtml += `
+            <tr class="hover:bg-slate-50">
+              <td class="p-3 font-bold text-indigo-900">${item.id}</td>
+              <td class="p-3 text-slate-700 leading-snug">${item.statement}</td>
+              <td class="p-3 text-center whitespace-nowrap">
+                <div class="inline-flex rounded-lg shadow-sm" role="group">
+          `;
+
+          q.options.forEach(optVal => {
+            const isSelected = val === optVal;
+            const btnClass = isSelected 
+              ? 'bg-indigo-600 text-white font-bold' 
+              : 'bg-white text-slate-600 hover:bg-slate-100 border-slate-300';
+            tableHtml += `
+              <button type="button" onclick="saveCategoryAnswer(${q.id}, ${item.id}, '${optVal}')" class="px-3 py-1.5 text-xs font-medium border ${btnClass} first:rounded-l-lg last:rounded-r-lg transition">
+                ${optVal}
+              </button>
+            `;
+          });
+
+          tableHtml += `
+                </div>
+              </td>
+            </tr>
+          `;
+        });
+
+        tableHtml += `</tbody></table>`;
+        table.innerHTML = tableHtml;
+        container.appendChild(table);
+      }
+    }
+
+    // ANSWER SAVING HANDLERS
+    function saveSingleAnswer(qId, value) {
+      userAnswers[qId] = value;
+      saveQuizState();
+      updateNavGridState();
+      loadQuestion(currentQuestionIndex);
+    }
+
+    function saveMcmaAnswer(qId, optionId, isChecked) {
+      if (!userAnswers[qId]) userAnswers[qId] = [];
+      if (isChecked) {
+        if (!userAnswers[qId].includes(optionId)) userAnswers[qId].push(optionId);
+      } else {
+        userAnswers[qId] = userAnswers[qId].filter(id => id !== optionId);
+      }
+      saveQuizState();
+      updateNavGridState();
+      loadQuestion(currentQuestionIndex);
+    }
+
+    function saveCategoryAnswer(qId, itemId, categoryVal) {
+      if (!userAnswers[qId]) userAnswers[qId] = {};
+      userAnswers[qId][itemId] = categoryVal;
+      saveQuizState();
+      updateNavGridState();
+      loadQuestion(currentQuestionIndex);
+    }
+
+    function toggleFlag() {
+      const qId = questions[currentQuestionIndex].id;
+      if (flaggedQuestions.has(qId)) {
+        flaggedQuestions.delete(qId);
+      } else {
+        flaggedQuestions.add(qId);
+      }
+      saveQuizState();
+      loadQuestion(currentQuestionIndex);
+    }
+
+    function navigateQuestion(direction) {
+      const newIdx = currentQuestionIndex + direction;
+      if (newIdx >= 0 && newIdx < questions.length) {
+        loadQuestion(newIdx);
+      }
+    }
+
+    // MODAL HANDLERS
+    function showSubmitModal() {
+      const answeredCount = questions.filter(q => isQuestionAnswered(q.id)).length;
+      document.getElementById('modal-answered-status').textContent = 
+        `Anda telah menjawab ${answeredCount} dari 25 soal. ${answeredCount < 25 ? 'Masih ada soal yang belum terisi!' : 'Semua soal telah terjawab.'}`;
+      document.getElementById('submit-modal').classList.remove('hidden');
+    }
+
+    function hideSubmitModal() {
+      document.getElementById('submit-modal').classList.add('hidden');
+    }
+
+    // EVALUATION & SUBMIT
+    function submitQuiz() {
+      hideSubmitModal();
+      clearInterval(timerInterval);
+
+      let totalScore = 0;
+      let correctCount = 0;
+
+      questions.forEach(q => {
+        const uAns = userAnswers[q.id];
+        if (q.type === 'single') {
+          if (uAns === q.correctAnswer) {
+            totalScore += 4; // 25 questions * 4 = 100 max score
+            correctCount++;
+          }
+        } else if (q.type === 'mcma') {
+          if (Array.isArray(uAns)) {
+            const sortedUser = [...uAns].sort().join(',');
+            const sortedCorrect = [...q.correctAnswer].sort().join(',');
+            if (sortedUser === sortedCorrect) {
+              totalScore += 4;
+              correctCount++;
+            }
+          }
+        } else if (q.type === 'category') {
+          if (uAns && typeof uAns === 'object') {
+            let itemCorrect = 0;
+            q.items.forEach(item => {
+              if (uAns[item.id] === item.correctAnswer) itemCorrect++;
+            });
+            // Proportional score
+            const qScore = (itemCorrect / q.items.length) * 4;
+            totalScore += qScore;
+            if (itemCorrect === q.items.length) correctCount++;
+          }
+        }
+      });
+
+      // Time Spent Calculation
+      const secondsSpent = 3600 - timeRemaining;
+      const minsSpent = Math.floor(secondsSpent / 60);
+      const secsSpent = secondsSpent % 60;
+
+      // Render Results
+      document.getElementById('final-score').textContent = Math.round(totalScore);
+      document.getElementById('correct-count').textContent = correctCount;
+      document.getElementById('time-spent').textContent = `${String(minsSpent).padStart(2, '0')}:${String(secsSpent).padStart(2, '0')}`;
+
+      // Grade Label
+      const gradeLabel = document.getElementById('grade-label');
+      if (totalScore >= 85) {
+        gradeLabel.textContent = 'Sangat Baik (A)';
+        gradeLabel.className = 'text-sm font-bold text-emerald-600 block mt-1';
+      } else if (totalScore >= 70) {
+        gradeLabel.textContent = 'Baik (B)';
+        gradeLabel.className = 'text-sm font-bold text-indigo-600 block mt-1';
+      } else if (totalScore >= 55) {
+        gradeLabel.textContent = 'Cukup (C)';
+        gradeLabel.className = 'text-sm font-bold text-amber-600 block mt-1';
+      } else {
+        gradeLabel.textContent = 'Perlu Belajar (D)';
+        gradeLabel.className = 'text-sm font-bold text-rose-600 block mt-1';
+      }
+
+      // Hide Quiz, Show Results
+      quizSubmitted = true;
+      saveQuizState();
+      quizScreen.classList.add('hidden');
+      document.getElementById('btn-finish-top').classList.add('hidden');
+      resultScreen.classList.remove('hidden');
+
+      renderReviewList();
+    }
+
+    function renderResultsFromSavedState() {
+      let totalScore = 0;
+      let correctCount = 0;
+      questions.forEach(q => {
+        const uAns = userAnswers[q.id];
+        if (q.type === 'single' && uAns === q.correctAnswer) { totalScore += 4; correctCount++; }
+        else if (q.type === 'mcma' && Array.isArray(uAns) && [...uAns].sort().join(',') === [...q.correctAnswer].sort().join(',')) { totalScore += 4; correctCount++; }
+        else if (q.type === 'category' && uAns && typeof uAns === 'object') {
+          let itemCorrect = 0; q.items.forEach(item => { if (uAns[item.id] === item.correctAnswer) itemCorrect++; });
+          totalScore += (itemCorrect / q.items.length) * 4; if (itemCorrect === q.items.length) correctCount++;
+        }
+      });
+      const secondsSpent = Math.max(0, 3600 - timeRemaining);
+      document.getElementById('final-score').textContent = Math.round(totalScore);
+      document.getElementById('correct-count').textContent = correctCount;
+      document.getElementById('time-spent').textContent = `${String(Math.floor(secondsSpent / 60)).padStart(2, '0')}:${String(secondsSpent % 60).padStart(2, '0')}`;
+      const gradeLabel = document.getElementById('grade-label');
+      if (totalScore >= 85) { gradeLabel.textContent = 'Sangat Baik (A)'; gradeLabel.className = 'text-sm font-bold text-emerald-600 block mt-1'; }
+      else if (totalScore >= 70) { gradeLabel.textContent = 'Baik (B)'; gradeLabel.className = 'text-sm font-bold text-indigo-600 block mt-1'; }
+      else if (totalScore >= 55) { gradeLabel.textContent = 'Cukup (C)'; gradeLabel.className = 'text-sm font-bold text-amber-600 block mt-1'; }
+      else { gradeLabel.textContent = 'Perlu Belajar (D)'; gradeLabel.className = 'text-sm font-bold text-rose-600 block mt-1'; }
+      renderReviewList();
+    }
+
+    function toggleReviewMode() {
+      const reviewContainer = document.getElementById('review-container');
+      reviewContainer.classList.toggle('hidden');
+      if (!reviewContainer.classList.contains('hidden')) {
+        reviewContainer.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+
+    // RENDER FULL REVIEW WITH EXPLANATION
+    function renderReviewList() {
+      const container = document.getElementById('review-list');
+      container.innerHTML = '';
+
+      questions.forEach((q, idx) => {
+        const uAns = userAnswers[q.id];
+        const card = document.createElement('div');
+        card.className = 'bg-white rounded-2xl p-5 md:p-6 shadow-sm border border-slate-200 space-y-4';
+
+        let statusBadge = '';
+        if (q.type === 'single') {
+          const isCorrect = uAns === q.correctAnswer;
+          statusBadge = isCorrect 
+            ? `<span class="bg-emerald-100 text-emerald-700 font-bold text-xs px-2.5 py-1 rounded-full"><i class="fa-solid fa-check mr-1"></i> Benar</span>`
+            : `<span class="bg-rose-100 text-rose-700 font-bold text-xs px-2.5 py-1 rounded-full"><i class="fa-solid fa-xmark mr-1"></i> Salah / Kurang Tepat</span>`;
+        } else if (q.type === 'mcma') {
+          const sortedUser = Array.isArray(uAns) ? [...uAns].sort().join(',') : '';
+          const sortedCorrect = [...q.correctAnswer].sort().join(',');
+          const isCorrect = sortedUser === sortedCorrect;
+          statusBadge = isCorrect 
+            ? `<span class="bg-emerald-100 text-emerald-700 font-bold text-xs px-2.5 py-1 rounded-full"><i class="fa-solid fa-check mr-1"></i> Benar Sempurna</span>`
+            : `<span class="bg-rose-100 text-rose-700 font-bold text-xs px-2.5 py-1 rounded-full"><i class="fa-solid fa-xmark mr-1"></i> Salah / Sebagian</span>`;
+        } else {
+          statusBadge = `<span class="bg-indigo-100 text-indigo-700 font-bold text-xs px-2.5 py-1 rounded-full">Evaluasi Kategori</span>`;
+        }
+
+        let bodyHtml = `
+          <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+            <span class="font-bold text-sm text-slate-800">Soal Nomor ${idx + 1} (${q.categoryName})</span>
+            ${statusBadge}
+          </div>
+          <p class="text-xs text-slate-500 font-semibold uppercase">Stimulus: ${q.stimulusTitle}</p>
+          <p class="text-sm font-semibold text-slate-800">${q.question}</p>
+        `;
+
+        // Render Answer comparison
+        if (q.type === 'single') {
+          bodyHtml += `
+            <div class="text-xs md:text-sm space-y-1 bg-slate-50 p-3 rounded-xl border border-slate-200">
+              <p><b>Jawaban Anda:</b> <span class="${uAns === q.correctAnswer ? 'text-emerald-600 font-bold' : 'text-rose-600 font-bold'}">${uAns || 'Tidak Dijawab'}</span></p>
+              <p><b>Kunci Jawaban:</b> <span class="text-emerald-700 font-bold">${q.correctAnswer}</span></p>
+            </div>
+          `;
+        } else if (q.type === 'mcma') {
+          bodyHtml += `
+            <div class="text-xs md:text-sm space-y-1 bg-slate-50 p-3 rounded-xl border border-slate-200">
+              <p><b>Jawaban Anda:</b> <span class="font-bold text-indigo-700">${Array.isArray(uAns) && uAns.length > 0 ? uAns.join(', ') : 'Tidak Dijawab'}</span></p>
+              <p><b>Kunci Jawaban Benar:</b> <span class="text-emerald-700 font-bold">${q.correctAnswer.join(', ')}</span></p>
+            </div>
+          `;
+        } else if (q.type === 'category') {
+          bodyHtml += `
+            <div class="overflow-x-auto rounded-xl border border-slate-200">
+              <table class="w-full text-left text-xs">
+                <thead class="bg-slate-100 text-slate-700 uppercase font-semibold">
+                  <tr>
+                    <th class="p-2">No</th>
+                    <th class="p-2">Pernyataan</th>
+                    <th class="p-2">Jawaban Anda</th>
+                    <th class="p-2">Kunci Jawaban</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-200 bg-white">
+          `;
+          q.items.forEach(item => {
+            const userSub = (uAns && uAns[item.id]) ? uAns[item.id] : 'Belum Dijawab';
+            const isSubCorrect = userSub === item.correctAnswer;
+            bodyHtml += `
+              <tr>
+                <td class="p-2 font-bold">${item.id}</td>
+                <td class="p-2 text-slate-700">${item.statement}</td>
+                <td class="p-2 ${isSubCorrect ? 'text-emerald-600 font-bold' : 'text-rose-600 font-bold'}">${userSub}</td>
+                <td class="p-2 text-emerald-700 font-bold">${item.correctAnswer}</td>
+              </tr>
+            `;
+          });
+          bodyHtml += `</tbody></table></div>`;
+        }
+
+        // Pembahasan Box
+        bodyHtml += `
+          <div class="bg-indigo-50 border border-indigo-200 p-4 rounded-xl text-xs md:text-sm text-indigo-950 space-y-1">
+            <p class="font-bold text-indigo-900 flex items-center"><i class="fa-solid fa-lightbulb text-amber-500 mr-2"></i> Pembahasan / Alasan Pembuktian:</p>
+            <p class="leading-relaxed">${q.explanation}</p>
+          </div>
+        `;
+
+        card.innerHTML = bodyHtml;
+        container.appendChild(card);
+      });
+    }
+
+    window.addEventListener('DOMContentLoaded', restoreQuizState);
+    window.addEventListener('beforeunload', saveQuizState);
+  </script>
+</body>
+</html>
